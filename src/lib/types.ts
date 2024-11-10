@@ -5,4 +5,6 @@ export type Bindings = {
   JWT_SECRET: string;
 };
 
+export type Environment = Bindings;
+
 export type AppOpenAPI = OpenAPIHono<{ Bindings: Bindings }>;
