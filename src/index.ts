@@ -1,9 +1,15 @@
-import { Hono } from 'hono'
+import configureOpenAPI from "@/lib/configure-open-api";
+import createApp from "@/lib/create-app";
+import index from "@/routes/index.route";
 
-const app = new Hono()
+const app = createApp();
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+const routes = [index];
 
-export default app
+configureOpenAPI(app);
+
+routes.forEach((route) => {
+  app.route("/", route);
+});
+
+export default app;

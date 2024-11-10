@@ -1,11 +1,17 @@
 {
   "name": "tws-api",
+  "type": "module",
+  "version": "1.0.0",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify"
   },
   "dependencies": {
-    "hono": "^4.6.9"
+    "@hono/zod-openapi": "^0.17.0",
+    "@scalar/hono-api-reference": "^0.5.159",
+    "hono": "^4.6.9",
+    "stoker": "^1.3.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241022.0",
