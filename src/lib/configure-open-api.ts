@@ -22,7 +22,7 @@ export default function configureOpenAPI(app: AppOpenAPI) {
     apiReference({
       theme: "saturn",
       pageTitle: "Vigenesia API Reference",
-      layout: "modern",
+      layout: "classic",
       defaultHttpClient: {
         targetKey: "javascript",
         clientKey: "fetch",
