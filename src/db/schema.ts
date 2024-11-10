@@ -8,6 +8,7 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 
 export const roleEnum = pgEnum("role", ["ADMIN", "USER"]);
 
@@ -20,8 +21,25 @@ export const users = pgTable("users", {
   created_at: timestamp("created_at").defaultNow().notNull(),
 });
 
-export type UsersTable = typeof users.$inferSelect;
-export type NewUser = typeof users.$inferInsert;
+export const selectUserSchema = createSelectSchema(users);
+export const selectUserSchemaWithoutPassword = createSelectSchema(users).omit({
+  password: true,
+});
+export const insertUserSchema = createInsertSchema(users, {
+  name: (schema) => schema.name.min(3).max(100),
+  email: (schema) => schema.email.email(),
+  password: (schema) => schema.password.min(8),
+})
+  .required({
+    name: true,
+    email: true,
+    password: true,
+  })
+  .omit({
+    id: true,
+    role: true,
+    created_at: true,
+  });
 
 // Tabel Kategori
 export const kategori = pgTable("kategori_berita", {
