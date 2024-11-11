@@ -6,7 +6,7 @@ import news from "@/routes/news/news.index";
 
 const app = createApp();
 
-const routes = [index, auth, news];
+const routes = [auth, news];
 
 configureOpenAPI(app);
 
