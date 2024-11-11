@@ -55,6 +55,10 @@ export const create = createRoute({
       createMessageObjectSchema("Unauthorized"),
       "Unauthorized"
     ),
+    [HttpStatusCodes.FORBIDDEN]: jsonContent(
+      createMessageObjectSchema("Forbidden"),
+      "Forbidden"
+    ),
   },
 });
 
@@ -107,6 +111,10 @@ export const patch = createRoute({
       createMessageObjectSchema("Unauthorized"),
       "Unauthorized"
     ),
+    [HttpStatusCodes.FORBIDDEN]: jsonContent(
+      createMessageObjectSchema("Forbidden"),
+      "Forbidden"
+    ),
   },
 });
 
@@ -131,6 +139,10 @@ export const remove = createRoute({
     [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
       createMessageObjectSchema("Unauthorized"),
       "Unauthorized"
+    ),
+    [HttpStatusCodes.FORBIDDEN]: jsonContent(
+      createMessageObjectSchema("Forbidden"),
+      "Forbidden"
     ),
   },
 });
