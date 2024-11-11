@@ -16,6 +16,7 @@ const loginSchema = selectUserSchema.omit({
 export const register = createRoute({
   path: "/auth/register",
   method: "post",
+  summary: "Register a new user",
   tags,
   request: {
     body: jsonContentRequired(insertUserSchema, "The user to create"),
@@ -37,6 +38,7 @@ export const register = createRoute({
 export const login = createRoute({
   path: "/auth/login",
   method: "post",
+  summary: "Login a user",
   tags,
   request: {
     body: jsonContentRequired(loginSchema, "The user to login"),
@@ -54,7 +56,7 @@ export const login = createRoute({
       }),
       "The logged in User"
     ),
-    [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(loginSchema),
       "The validation error(s) | User Not Found | Invalid Cradentials"
     ),

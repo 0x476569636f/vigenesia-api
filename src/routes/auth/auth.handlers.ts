@@ -74,7 +74,7 @@ export const login: AppRouteHandler<LoginRoute> = async (c) => {
           ],
         },
       },
-      HttpStatusCodes.UNAUTHORIZED
+      HttpStatusCodes.UNPROCESSABLE_ENTITY
     );
   }
 
@@ -94,7 +94,7 @@ export const login: AppRouteHandler<LoginRoute> = async (c) => {
           ],
         },
       },
-      HttpStatusCodes.UNAUTHORIZED
+      HttpStatusCodes.UNPROCESSABLE_ENTITY
     );
   }
 
