@@ -54,7 +54,7 @@ export const login = createRoute({
           role: z.string(),
         }),
       }),
-      "The logged in User"
+      "Token and the logged in user informations"
     ),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(loginSchema),

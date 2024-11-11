@@ -21,7 +21,10 @@ export const users = pgTable("users", {
   created_at: timestamp("created_at").defaultNow().notNull(),
 });
 
-export const selectUserSchema = createSelectSchema(users);
+// User Schemas
+export const selectUserSchema = createSelectSchema(users, {
+  email: (schema) => schema.email.email(),
+});
 export const selectUserSchemaWithoutPassword = createSelectSchema(users).omit({
   password: true,
 });
@@ -46,10 +49,9 @@ export const kategori = pgTable("kategori_berita", {
   id: serial("id").primaryKey(),
   namaKategori: varchar("nama_kategori", { length: 100 }).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
-    .defaultNow()
-    .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
-    .notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+    () => sql`CURRENT_TIMESTAMP`
+  ),
 });
 
 // Tabel Berita
@@ -61,13 +63,42 @@ export const berita = pgTable("berita", {
     .references(() => kategori.id)
     .notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
-    .defaultNow()
-    .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
-    .notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+    () => sql`CURRENT_TIMESTAMP`
+  ),
   userId: integer("user_id").references(() => users.id, {
     onDelete: "cascade",
   }),
+});
+
+export const selectBeritaSchema = createSelectSchema(berita);
+export const insertBeritaSchema = createInsertSchema(berita, {
+  judul: (schema) => schema.judul.min(3).max(200),
+  isi: (schema) => schema.isi.min(10),
+  kategoriId: (schema) => schema.kategoriId.min(1).positive(),
+  userId: (schema) => schema.userId.min(1).positive(),
+})
+  .required({
+    judul: true,
+    isi: true,
+    kategoriId: true,
+    userId: true,
+  })
+  .omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+  });
+
+export const patchBeritaSchema = insertBeritaSchema.partial();
+
+export const beritaWithUser = createSelectSchema(berita).extend({
+  user: createSelectSchema(users)
+    .omit({
+      password: true,
+      created_at: true,
+    })
+    .nullable(),
 });
 
 // Motivasi Table
@@ -81,10 +112,9 @@ export const motivasi = pgTable("motivasi", {
     })
     .notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at")
-    .defaultNow()
-    .$onUpdate(() => sql`CURRENT_TIMESTAMP`)
-    .notNull(),
+  updatedAt: timestamp("updated_at", { mode: "string" }).$onUpdate(
+    () => sql`CURRENT_TIMESTAMP`
+  ),
 });
 
 // Relations
