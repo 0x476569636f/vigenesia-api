@@ -1,8 +1,12 @@
 import { Context, Next } from "hono";
 import { AuthService } from "@/services/auth.service";
 import * as HttpStatusCodes from "stoker/http-status-codes";
+import { MiddlewareHandler } from "hono/types";
 
-export async function authMiddleware(c: Context, next: Next) {
+export const authMiddleware: MiddlewareHandler = async (
+  c: Context,
+  next: Next
+) => {
   try {
     const authHeader = c.req.header("Authorization");
     if (!authHeader?.startsWith("Bearer ")) {
@@ -18,7 +22,7 @@ export async function authMiddleware(c: Context, next: Next) {
   } catch (error) {
     return c.json({ message: "Unauthorized" }, HttpStatusCodes.UNAUTHORIZED);
   }
-}
+};
 
 export function requireRole(role: string) {
   return async function (c: Context, next: Next) {
