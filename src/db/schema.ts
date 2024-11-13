@@ -60,7 +60,11 @@ export const selectKategoriSchema = createSelectSchema(kategori, {
 
 export const insertKategoriSchema = createInsertSchema(kategori, {
   namaKategori: (schema) => schema.namaKategori.min(3).max(100),
+}).pick({
+  namaKategori: true,
 });
+
+export const patchKategoriSchema = insertKategoriSchema.partial();
 
 // Tabel Berita
 export const berita = pgTable("berita", {

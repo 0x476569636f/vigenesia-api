@@ -20,7 +20,7 @@ const router = createRouter().openapi(
   (c) => {
     return c.json(
       {
-        message: "Tasks API on Cloudflare",
+        message: "Deployed On Cloudflare",
       },
       HttpStatusCodes.OK
     );
