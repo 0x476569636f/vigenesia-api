@@ -11,7 +11,7 @@ import {
   insertBeritaSchema,
   patchBeritaSchema,
   selectBeritaSchema,
-  beritaWithUser,
+  beritaWithUserAndCategory,
 } from "@/db/schema";
 import { notFoundSchema } from "@/lib/constants";
 import { adminOnly, authenticated } from "@/middleware/auth.middleware";
@@ -25,7 +25,10 @@ export const news = createRoute({
   tags,
   summary: "Get all news, bearer token is required",
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(z.array(beritaWithUser), "Get All News"),
+    [HttpStatusCodes.OK]: jsonContent(
+      z.array(beritaWithUserAndCategory),
+      "Get All News"
+    ),
     [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
       createMessageObjectSchema("Unauthorized"),
       "Unauthorized"
@@ -72,7 +75,10 @@ export const getOne = createRoute({
   },
   tags,
   responses: {
-    [HttpStatusCodes.OK]: jsonContent(selectBeritaSchema, "The requested news"),
+    [HttpStatusCodes.OK]: jsonContent(
+      beritaWithUserAndCategory,
+      "The requested news"
+    ),
     [HttpStatusCodes.NOT_FOUND]: jsonContent(notFoundSchema, "news not found"),
     [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
       createErrorSchema(IdParamsSchema),

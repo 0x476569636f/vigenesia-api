@@ -26,6 +26,7 @@ export const news: AppRouteHandler<NewsRoute> = async (c) => {
           role: true,
         },
       },
+      kategori: true,
     },
   });
   return c.json(news, HttpStatusCodes.OK);
@@ -48,6 +49,17 @@ export const getOne: AppRouteHandler<GetOneRoute> = async (c) => {
   const newsItem = await db.query.berita.findFirst({
     where(fields, operators) {
       return operators.eq(fields.id, id);
+    },
+    with: {
+      user: {
+        columns: {
+          id: true,
+          name: true,
+          email: true,
+          role: true,
+        },
+      },
+      kategori: true,
     },
   });
 

@@ -54,6 +54,14 @@ export const kategori = pgTable("kategori_berita", {
   ),
 });
 
+export const selectKategoriSchema = createSelectSchema(kategori, {
+  namaKategori: (schema) => schema.namaKategori.min(3).max(100),
+});
+
+export const insertKategoriSchema = createInsertSchema(kategori, {
+  namaKategori: (schema) => schema.namaKategori.min(3).max(100),
+});
+
 // Tabel Berita
 export const berita = pgTable("berita", {
   id: serial("id").primaryKey(),
@@ -71,6 +79,7 @@ export const berita = pgTable("berita", {
   }),
 });
 
+// News Schema
 export const selectBeritaSchema = createSelectSchema(berita);
 export const insertBeritaSchema = createInsertSchema(berita, {
   judul: (schema) => schema.judul.min(3).max(200),
@@ -92,13 +101,14 @@ export const insertBeritaSchema = createInsertSchema(berita, {
 
 export const patchBeritaSchema = insertBeritaSchema.partial();
 
-export const beritaWithUser = createSelectSchema(berita).extend({
+export const beritaWithUserAndCategory = createSelectSchema(berita).extend({
   user: createSelectSchema(users)
     .omit({
       password: true,
       created_at: true,
     })
     .nullable(),
+  kategori: createSelectSchema(kategori),
 });
 
 // Motivasi Table
