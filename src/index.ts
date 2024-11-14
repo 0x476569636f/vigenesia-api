@@ -11,6 +11,11 @@ const routes = [auth, news, newsCategory, motivations];
 
 configureOpenAPI(app);
 
+// Redirect to /reference
+app.all("/", (c) => {
+  return c.redirect("/reference");
+});
+
 routes.forEach((route) => {
   app.route("/", route);
 });
