@@ -54,6 +54,7 @@ export const kategori = pgTable("kategori_berita", {
   ),
 });
 
+// Category Schema
 export const selectKategoriSchema = createSelectSchema(kategori, {
   namaKategori: (schema) => schema.namaKategori.min(3).max(100),
 });
@@ -131,6 +132,36 @@ export const motivasi = pgTable("motivasi", {
   ),
 });
 
+// Motivation Schema
+export const selectMotivasiSchema = createSelectSchema(motivasi);
+
+export const insertMotivasiSchema = createInsertSchema(motivasi, {
+  isi_motivasi: (schema) => schema.isi_motivasi.min(3),
+  userId: (schema) => schema.userId.min(1).positive(),
+})
+  .required({
+    isi_motivasi: true,
+    userId: true,
+  })
+  .omit({
+    id: true,
+    createdAt: true,
+    updatedAt: true,
+  });
+
+export const selectMotivasiSchemaWithUser = createSelectSchema(motivasi).extend(
+  {
+    user: createSelectSchema(users)
+      .omit({
+        password: true,
+        created_at: true,
+      })
+      .nullable(),
+  }
+);
+
+export const patchMotivasiSchema = insertMotivasiSchema.partial();
+
 // Relations
 export const kategoriRelations = relations(kategori, ({ many }) => ({
   berita: many(berita),
@@ -153,21 +184,3 @@ export const motivasiRelations = relations(motivasi, ({ one }) => ({
     references: [users.id],
   }),
 }));
-
-// Types
-export type Kategori = typeof kategori.$inferSelect;
-export type NewKategori = typeof kategori.$inferInsert;
-
-export type Berita = typeof berita.$inferSelect;
-export type NewBerita = typeof berita.$inferInsert;
-
-export type Motivasi = typeof motivasi.$inferSelect;
-export type NewMotivasi = typeof motivasi.$inferInsert;
-
-export type NewsWithUser = typeof berita.$inferSelect & {
-  user: typeof users.$inferSelect | null;
-};
-
-export type MotivasiWithUser = typeof motivasi.$inferSelect & {
-  user: typeof users.$inferSelect | null;
-};
