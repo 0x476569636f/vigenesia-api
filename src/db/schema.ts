@@ -72,6 +72,7 @@ export const berita = pgTable("berita", {
   id: serial("id").primaryKey(),
   judul: varchar("judul", { length: 200 }).notNull(),
   isi: text("isi").notNull(),
+  image: text("image"),
   kategoriId: integer("kategori_id")
     .references(() => kategori.id)
     .notNull(),
