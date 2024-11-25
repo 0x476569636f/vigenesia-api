@@ -16,6 +16,15 @@ import { eq } from "drizzle-orm";
 
 export const newsCategory: AppRouteHandler<NewsCategoryRoute> = async (c) => {
   const { db } = createDb(c.env);
+  const { withNews } = c.req.query();
+  if (withNews) {
+    const newsCategory = await db.query.kategori.findMany({
+      with: {
+        berita: true,
+      },
+    });
+    return c.json(newsCategory, HttpStatusCodes.OK);
+  }
   const newsCategory = await db.query.kategori.findMany();
   return c.json(newsCategory, HttpStatusCodes.OK);
 };
