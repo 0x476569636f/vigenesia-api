@@ -43,6 +43,8 @@ export const create: AppRouteHandler<CreateRoute> = async (c) => {
 export const getOne: AppRouteHandler<GetOneRoute> = async (c) => {
   const { db } = createDb(c.env);
   const { id } = c.req.valid("param");
+  const { withNews } = c.req.query();
+
   const category = await db.query.kategori.findFirst({
     where(fields, operators) {
       return operators.eq(fields.id, id);
@@ -56,6 +58,18 @@ export const getOne: AppRouteHandler<GetOneRoute> = async (c) => {
       },
       HttpStatusCodes.NOT_FOUND
     );
+  }
+
+  if (withNews) {
+    const category = await db.query.kategori.findFirst({
+      where(fields, operators) {
+        return operators.eq(fields.id, id);
+      },
+      with: {
+        berita: true,
+      },
+    });
+    return c.json(category, HttpStatusCodes.OK);
   }
 
   return c.json(category, HttpStatusCodes.OK);
