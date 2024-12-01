@@ -4,7 +4,7 @@ Proyek ini adalah API yang dibangun menggunakan [Hono](https://hono.dev/) dan di
 
 ## Fitur
 
-- Otentikasi pengguna menggunakan JWT
+- Otentikasi pengguna menggunakan JWT (login untuk mendapatkan token)
 - CRUD untuk berita dan motivasi
 - Pencarian berita
 - Middleware untuk otorisasi berdasarkan role (admin | user)
