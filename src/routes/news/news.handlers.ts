@@ -16,6 +16,30 @@ import { eq } from "drizzle-orm";
 
 export const news: AppRouteHandler<NewsRoute> = async (c) => {
   const { db } = createDb(c.env);
+
+  const { search } = c.req.query();
+  if(search) {
+    const news = await db.query.berita.findMany({
+      where: (fields, operators) => {
+        return operators.or(
+          operators.like(operators.sql`lower(${fields.judul})`, `%${search.toLowerCase()}%`),
+          operators.like(operators.sql`lower(${fields.isi})`, `%${search.toLowerCase()}%`),
+        );
+      },
+      with: {
+        user: {
+          columns: {
+            id: true,
+            name: true,
+            email: true,
+            role: true,
+          },
+        },
+        kategori: true,
+      },
+    });
+    return c.json(news, HttpStatusCodes.OK);
+  }
   const news = await db.query.berita.findMany({
     with: {
       user: {
