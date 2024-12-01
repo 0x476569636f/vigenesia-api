@@ -23,6 +23,11 @@ export const newsCategory = createRoute({
   middleware: authenticated,
   tags,
   summary: "Get all news category, bearer token is required",
+  request: {
+    query: z.object({
+      withNews: z.boolean().optional().or(z.string().optional()),
+    })
+  },
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
       z.array(selectKategoriSchema),
@@ -71,6 +76,9 @@ export const getOne = createRoute({
   summary: "Get a single news category by id, bearer token is required",
   request: {
     params: IdParamsSchema,
+    query: z.object({
+      withNews: z.boolean().optional().or(z.string().optional()),
+    })
   },
   tags,
   responses: {

@@ -17,7 +17,7 @@ import { eq } from "drizzle-orm";
 export const newsCategory: AppRouteHandler<NewsCategoryRoute> = async (c) => {
   const { db } = createDb(c.env);
   const { withNews } = c.req.query();
-  if (withNews) {
+  if (withNews === "true") {
     const newsCategory = await db.query.kategori.findMany({
       with: {
         berita: true,
@@ -60,7 +60,7 @@ export const getOne: AppRouteHandler<GetOneRoute> = async (c) => {
     );
   }
 
-  if (withNews) {
+  if (withNews === "true") {
     const category = await db.query.kategori.findFirst({
       where(fields, operators) {
         return operators.eq(fields.id, id);
