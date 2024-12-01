@@ -24,6 +24,11 @@ export const news = createRoute({
   middleware: authenticated,
   tags,
   summary: "Get all news, bearer token is required",
+  request: {
+    query: z.object({
+      search: z.string().optional(),
+    }),
+  },
   responses: {
     [HttpStatusCodes.OK]: jsonContent(
       z.array(beritaWithUserAndCategory),
