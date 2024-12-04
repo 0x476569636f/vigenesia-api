@@ -19,7 +19,7 @@ Proyek ini dibangun menggunakan teknologi berikut:
 - [Node.js](https://nodejs.org/)
 - [Hono](https://hono.dev/)
 - [Cloudflare Workers](https://workers.cloudflare.com/)
-- [Neon Serveless Database](https://nodejs.org/)
+- [Neon Serveless Database](https://neon.tech/)
 
 ## Fitur
 
