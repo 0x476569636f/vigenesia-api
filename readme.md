@@ -1,6 +1,6 @@
 # Vigenesia API
 
-Proyek ini merupakan remake dari [Vigenesia](https://github.com/indrakoto/vigenesia), sebuah API yang awalnya dibangun menggunakan PHP lalu diremake menggunakan JavaScript. Proyek ini juga merupakan eksperimen untuk mengeksplorasi kemampuan dan performa JavaScript dalam pengembangan API. API ini dijalankan di Cloudflare Workers, terhubung dengan Neon Serverless Database untuk penyimpanan data, dan menggunakan JWT (JSON Web Token) untuk otentikasi
+Proyek ini merupakan remake dari [Vigenesia](https://github.com/indrakoto/vigenesia), sebuah API yang awalnya dibangun menggunakan PHP lalu diremake menggunakan JavaScript. Proyek ini juga merupakan eksperimen untuk mengeksplorasi kemampuan dan performa JavaScript dalam pengembangan API. API ini dijalankan di Cloudflare Workers, terhubung dengan Neon Serverless Database untuk penyimpanan data, dan menggunakan JWT (JSON Web Token) untuk autentikasi
 
 ## Anggota Kelompok 3
 
@@ -81,5 +81,5 @@ Dokumentasi ini mencakup semua endpoint API yang tersedia, beserta metode HTTP y
 
 ## Penggunaan
 
-Setelah proyek berjalan,Anda dapat mengakses API melalui endpoint yang telah ditentukan. Pastikan untuk menggunakan token JWT yang valid dalam header Authorization untuk mengakses endpoint yang memerlukan otentikasi.
+Setelah proyek berjalan,Anda dapat mengakses API melalui endpoint yang telah ditentukan. Pastikan untuk menggunakan token JWT yang valid dalam header Authorization untuk mengakses endpoint yang memerlukan Autentikasi.
 token bisa di dapat setelah login, jika belum mempunyai akun silahkan register terlebih daluhu.

@@ -13,7 +13,7 @@ export class AuthService {
     return new SignJWT(payload)
       .setProtectedHeader({ alg: "HS256" })
       .setIssuedAt()
-      .setExpirationTime("2w")
+      .setExpirationTime("4w")
       .sign(secret);
   }
 
