@@ -81,5 +81,5 @@ Dokumentasi ini mencakup semua endpoint API yang tersedia, beserta metode HTTP y
 
 ## Penggunaan
 
-Setelah proyek berjalan,Anda dapat mengakses API melalui endpoint yang telah ditentukan. Pastikan untuk menggunakan token JWT yang valid dalam header Authorization untuk mengakses endpoint yang memerlukan otentikasi.
+Setelah proyek berjalan,Anda dapat mengakses API melalui endpoint yang telah ditentukan. Pastikan untuk menggunakan token JWT yang valid dalam header Authorization untuk mengakses endpoint yang memerlukan Autentikasi.
 token bisa di dapat setelah login, jika belum mempunyai akun silahkan register terlebih daluhu.
