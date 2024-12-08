@@ -18,12 +18,19 @@ export const news: AppRouteHandler<NewsRoute> = async (c) => {
   const { db } = createDb(c.env);
 
   const { search } = c.req.query();
-  if(search) {
+  if (search) {
     const news = await db.query.berita.findMany({
+      orderBy: (berita, { desc }) => [desc(berita.updatedAt)],
       where: (fields, operators) => {
         return operators.or(
-          operators.like(operators.sql`lower(${fields.judul})`, `%${search.toLowerCase()}%`),
-          operators.like(operators.sql`lower(${fields.isi})`, `%${search.toLowerCase()}%`),
+          operators.like(
+            operators.sql`lower(${fields.judul})`,
+            `%${search.toLowerCase()}%`
+          ),
+          operators.like(
+            operators.sql`lower(${fields.isi})`,
+            `%${search.toLowerCase()}%`
+          )
         );
       },
       with: {
@@ -41,6 +48,7 @@ export const news: AppRouteHandler<NewsRoute> = async (c) => {
     return c.json(news, HttpStatusCodes.OK);
   }
   const news = await db.query.berita.findMany({
+    orderBy: (berita, { desc }) => [desc(berita.updatedAt)],
     with: {
       user: {
         columns: {
