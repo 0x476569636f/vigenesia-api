@@ -17,6 +17,7 @@ import { ZOD_ERROR_CODES, ZOD_ERROR_MESSAGES } from "@/lib/constants";
 export const motivations: AppRouteHandler<MotivationsRoute> = async (c) => {
   const { db } = createDb(c.env);
   const motivations = await db.query.motivasi.findMany({
+    orderBy: (motivation, { desc }) => [desc(motivation.updatedAt)],
     with: {
       user: {
         columns: {
