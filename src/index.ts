@@ -4,10 +4,11 @@ import auth from "@/routes/auth/auth.index";
 import news from "@/routes/news/news.index";
 import newsCategory from "@/routes/news-category/news-category.index";
 import motivations from "@/routes/motivations/motivations.index";
+import users from "@/routes/user/user.index";
 
 const app = createApp();
 
-const routes = [auth, news, newsCategory, motivations];
+const routes = [auth, news, newsCategory, motivations, users];
 
 configureOpenAPI(app);
 
