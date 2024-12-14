@@ -35,7 +35,37 @@ export const users = createRoute({
   },
 });
 
-
+export const remove = createRoute({
+  path: "/users/{id}",
+  method: "delete",
+  middleware: adminOnly,
+  summary: "Delete all users, bearer token is required",
+  request: {
+    params: IdParamsSchema,
+  },
+  tags,
+  responses: {
+    [HttpStatusCodes.NO_CONTENT]: {
+      description: "users deleted",
+    },
+    [HttpStatusCodes.NOT_FOUND]: jsonContent(
+      notFoundSchema,
+      "users not found"
+    ),
+    [HttpStatusCodes.UNPROCESSABLE_ENTITY]: jsonContent(
+      createErrorSchema(IdParamsSchema),
+      "Invalid id error"
+    ),
+    [HttpStatusCodes.UNAUTHORIZED]: jsonContent(
+      createMessageObjectSchema("Unauthorized"),
+      "Unauthorized"
+    ),
+    [HttpStatusCodes.FORBIDDEN]: jsonContent(
+      createMessageObjectSchema("Forbidden"),
+      "Forbidden"
+    ),
+  },
+});
 
 export type UsersRoute = typeof users;
-
+export type RemoveRoute = typeof remove;
